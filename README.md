@@ -23,7 +23,8 @@ Este endpoint permite obtener la información de las estaciones registradas, jun
 ### Ejemplo de Solicitud
 ```bash
 curl -X GET "http://localhost/station1.discientic.com/index.php?endpoint=stations"
-
+```
+```json
 
 [
     {
@@ -88,3 +89,70 @@ curl -X POST "http://localhost/station1.discientic.com/index.php?endpoint=regist
 }
 
 ```
+## 🔒 Endpoint: Login de Usuario
+
+### URL
+`POST` [http://tu-servidor/index.php?endpoint=login](http://tu-servidor/index.php?endpoint=login)
+
+### Descripción
+Este endpoint permite a los usuarios iniciar sesión en el sistema proporcionando su correo electrónico y contraseña.
+
+---
+
+### Body de la Solicitud
+El body debe enviarse en formato JSON con la siguiente estructura:
+
+```json
+{
+    "email": "ejemplo@example.com",
+    "password": "12345678"
+}
+```
+
+### Ejemplo de Solicitud
+
+```bash
+curl -X POST "http://tu-servidor/index.php?endpoint=login" \
+-H "Content-Type: application/json" \
+-d '{
+    "email": "ejemplo@example.com",
+    "password": "12345678"
+}'
+```
+
+### Ejemplo de Respuesta Exitosa
+```json
+{
+    "success": "Login successful",
+    "user": {
+        "id": 3,
+        "Name": "ejemplo",
+        "Email": "ejemplo@example.com",
+        "id_role": 2
+    }
+}
+```
+## Posibles Errores
+
+### 1.Contraseña Incorrecta
+```json
+{
+    "error": "Invalid password"
+}
+```
+
+### 2.Usuario no Encontrado
+```json
+{
+    "error": "No user found with the provided email"
+}
+
+```
+### 3.Campos Faltantes
+```json
+{
+    "error": "Email and password are required"
+}
+
+
+```    
