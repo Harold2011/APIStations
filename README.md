@@ -92,7 +92,7 @@ curl -X POST "http://localhost/station1.discientic.com/index.php?endpoint=regist
 ## 🔒 Endpoint: Login de Usuario
 
 ### URL
-`POST` [http://tu-servidor/index.php?endpoint=login](http://tu-servidor/index.php?endpoint=login)
+`POST` [http://localhost/index.php?endpoint=login](http://tu-servidor/index.php?endpoint=login)
 
 ### Descripción
 Este endpoint permite a los usuarios iniciar sesión en el sistema proporcionando su correo electrónico y contraseña.
@@ -156,3 +156,4 @@ curl -X POST "http://tu-servidor/index.php?endpoint=login" \
 
 
 ```    
+
