@@ -352,3 +352,5 @@ curl -X GET "http://localhost/station1.discientic.com/index.php?endpoint=station
     }
 ]
 ```
+## Relaciones en base de datos
+![image](https://github.com/user-attachments/assets/1b028989-adb2-420d-b5b9-7bb49a65c59a)
