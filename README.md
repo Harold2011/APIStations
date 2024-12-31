@@ -281,3 +281,74 @@ curl -X GET "http://localhost/station1.discientic.com/index.php?endpoint=station
     }
 ]
 ```
+
+
+### POST: Crear una nueva tabla
+
+**URL**: `http://localhost/station1.discientic.com/index.php?endpoint=table`
+
+**Cuerpo de la solicitud (JSON)**:
+```json
+{
+  "name": "Mi Tabla",
+  "id_board": 1
+}
+```
+### Respuesta (JSON):
+```json
+{
+    "success": "Table created successfully",
+    "table_id": "2"
+}
+### POST: Asociar un sensor a una tabla
+
+**URL**: `http://localhost/station1.discientic.com/index.php?endpoint=table_sensor`
+
+**Cuerpo de la solicitud (JSON)**:
+```json
+{
+  "action": "create",
+  "tableId": 1,
+  "sensorId": 2
+}
+```
+
+### Respuesta (JSON):
+```json
+{
+    "success": "Sensor successfully associated with table",
+    "table_sensor_id": "3"
+}
+```
+
+### GET http://localhost/station1.discientic.com/index.php?endpoint=table_sensor
+
+**Body:**
+
+```json
+{
+  "tableId": 1
+}
+
+```
+### Respuesta:
+
+```json
+[
+    {
+        "id": 1,
+        "id_table": 1,
+        "id_sensor": 2
+    },
+    {
+        "id": 2,
+        "id_table": 1,
+        "id_sensor": 2
+    },
+    {
+        "id": 3,
+        "id_table": 1,
+        "id_sensor": 2
+    }
+]
+```
