@@ -52,3 +52,37 @@ curl -X GET "http://localhost/station1.discientic.com/index.php?endpoint=station
     }
 ]
 
+## 🖥️ Endpoint: Registrar Usuario
+
+### URL
+`POST` [http://localhost/station1.discientic.com/index.php?endpoint=register](http://localhost/station1.discientic.com/index.php?endpoint=register)
+
+### Descripción
+Este endpoint permite registrar un nuevo usuario en el sistema con los datos básicos como nombre, correo electrónico, contraseña y el rol.
+
+### Body de la Solicitud
+El body debe enviarse en formato JSON con la siguiente estructura:
+```json
+{
+    "name": "ejemplo",
+    "email": "ejemplo@example.com",
+    "password": "12345678",
+    "role_id": 2
+}
+
+### Ejemplo de Solicitud
+
+curl -X POST "http://localhost/station1.discientic.com/index.php?endpoint=register" \
+-H "Content-Type: application/json" \
+-d '{
+    "name": "ejemplo",
+    "email": "ejemplo@example.com",
+    "password": "12345678",
+    "role_id": 2
+}'
+
+### Ejemplo de Respuesta Exitosa
+
+{
+    "success": "User registered successfully"
+}
