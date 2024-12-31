@@ -3,6 +3,7 @@
 require_once "Database.php";
 require_once "Station.php";
 require_once "User.php";
+require_once "Tables.php";
 require_once 'Board.php';
 require_once 'StationBoard.php'; // Incluir la clase StationBoard
 require_once 'TableSensor.php'; // Incluir la clase TableSensor
@@ -12,6 +13,7 @@ class APIHandler {
     private $station;
     private $user;
     private $board;
+    private $table;
     private $stationBoard;
     private $tableSensor; // Nueva propiedad
 
@@ -22,6 +24,7 @@ class APIHandler {
         $this->station = new Station($this->db);
         $this->user = new User($this->db);
         $this->board = new Board($this->db);
+        $this->table = new Tables($this->db);
         $this->stationBoard = new StationBoard($this->db); // Instanciar la clase StationBoard
         $this->tableSensor = new TableSensor($this->db); // Instanciar la clase TableSensor
     }
@@ -147,6 +150,29 @@ class APIHandler {
         }
     }
 
+    private function handleStationBoard() {
+        // Obtener la acción deseada, ya sea crear una asociación o consultar
+        $data = json_decode(file_get_contents("php://input"), true);
+
+        // Verificar si la acción es la creación de una nueva asociación
+        if (isset($data['action']) && $data['action'] === 'create') {
+            if (!isset($data['boardId'], $data['stationId'])) {
+                $this->respond(["error" => "Invalid input"], 400);
+                return;
+            }
+
+            $result = $this->stationBoard->createStationBoard($data['boardId'], $data['stationId']);
+            $this->respond($result);
+        }
+        // Consultar las estaciones asociadas a un tablero
+        else if (isset($data['boardId'])) {
+            $result = $this->stationBoard->getStationsByBoard($data['boardId']);
+            $this->respond($result);
+        } else {
+            $this->respond(["error" => "Invalid input"], 400);
+        }
+    }
+    
     private function respond($data, $status = 200) {
         http_response_code($status);
         header('Content-Type: application/json');

@@ -23,7 +23,7 @@ class TableSensor {
 
     // Método para obtener los sensores asociados a una tabla
     public function getSensorsByTable($tableId) {
-        $query = "SELECT * FROM table_sensor WHERE id_table = :tableId";
+        $query = "SELECT * FROM sensor_variable WHERE id_table = :tableId";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":tableId", $tableId);
         $stmt->execute();
