@@ -69,9 +69,9 @@ El body debe enviarse en formato JSON con la siguiente estructura:
     "password": "12345678",
     "role_id": 2
 }
-
+```
 ### Ejemplo de Solicitud
-
+```bash
 curl -X POST "http://localhost/station1.discientic.com/index.php?endpoint=register" \
 -H "Content-Type: application/json" \
 -d '{
@@ -80,9 +80,11 @@ curl -X POST "http://localhost/station1.discientic.com/index.php?endpoint=regist
     "password": "12345678",
     "role_id": 2
 }'
-
+```
 ### Ejemplo de Respuesta Exitosa
-
+```json
 {
     "success": "User registered successfully"
 }
+
+```
