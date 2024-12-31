@@ -156,4 +156,128 @@ curl -X POST "http://tu-servidor/index.php?endpoint=login" \
 
 
 ```    
+## 📋 Endpoint: Crear Board
 
+### URL
+`POST` [http://localhost/station1.discientic.com/index.php?endpoint=board](http://localhost/station1.discientic.com/index.php?endpoint=board)
+
+### Descripción
+Este endpoint permite crear un nuevo board proporcionando su nombre.
+
+---
+
+### Body de la Solicitud
+El body debe enviarse en formato JSON con la siguiente estructura:
+
+```json
+{
+  "name": "Mi Nuevo Board"
+}
+```
+
+### Ejemplo de Solicitud
+```bash
+
+curl -X POST "http://localhost/station1.discientic.com/index.php?endpoint=board" \
+-H "Content-Type: application/json" \
+-d '{
+  "name": "Mi Nuevo Board"
+}'
+```
+
+### Ejemplo de Respuesta Exitosa
+```json
+{
+    "success": "Board created successfully",
+    "board_id": "2"
+}
+```
+
+## 📋 Endpoint: Asociar Estación con Board
+
+### URL
+`POST` [http://localhost/station1.discientic.com/index.php?endpoint=station_board](http://localhost/station1.discientic.com/index.php?endpoint=station_board)
+
+### Descripción
+Este endpoint permite asociar una estación con un board específico.
+
+---
+
+### Body de la Solicitud (Método POST)
+El body debe enviarse en formato JSON con la siguiente estructura:
+
+```json
+{
+  "action": "create",
+  "boardId": 1,
+  "stationId": 1
+}
+```
+
+### Ejemplo de Solicitud (Método POST)
+```bash
+curl -X POST "http://localhost/station1.discientic.com/index.php?endpoint=station_board" \
+-H "Content-Type: application/json" \
+-d '{
+  "action": "create",
+  "boardId": 1,
+  "stationId": 1
+}'
+```
+### Ejemplo de Respuesta Exitosa (POST)
+```json
+{
+    "success": "Station successfully associated with board",
+    "station_board_id": "4"
+}
+
+```
+## 📋 Endpoint: Consultar Estaciones Asociadas a un Board
+
+### URL
+`GET` [http://localhost/station1.discientic.com/index.php?endpoint=station_board](http://localhost/station1.discientic.com/index.php?endpoint=station_board)
+
+### Descripción
+Este endpoint permite consultar las estaciones asociadas a un board específico.
+
+---
+
+### Body de la Solicitud (Método GET)
+El body debe enviarse en formato JSON con la siguiente estructura:
+
+```json
+{
+  "boardId": 1
+}
+
+```
+
+### Ejemplo de Solicitud (Método GET)
+```bash
+curl -X GET "http://localhost/station1.discientic.com/index.php?endpoint=station_board" \
+-H "Content-Type: application/json" \
+-d '{
+  "boardId": 1
+}'
+```
+
+### Respuesta
+```json
+[
+    {
+        "id": 2,
+        "id_board": 1,
+        "id_station": 1
+    },
+    {
+        "id": 4,
+        "id_board": 1,
+        "id_station": 1
+    },
+    {
+        "id": 5,
+        "id_board": 1,
+        "id_station": 1
+    }
+]
+```
