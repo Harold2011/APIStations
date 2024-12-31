@@ -1,11 +1,29 @@
-#Esta API permite manejar informacion de estaciones por medio de IoT
+# API de Gestión de Estaciones IoT 🌐
 
+Esta API permite manejar información de estaciones a través de dispositivos IoT. Con ella, puedes gestionar estaciones, sensores, parámetros y más.
 
-Endpoint para visualzar parametros
+---
 
-http://localhost/station1.discientic.com/index.php?endpoint=stations
-metodo GET
-ejemplo de respuesta
+## ✨ Funcionalidades Principales
+- Gestión de estaciones.
+- Visualización de parámetros de sensores.
+- Relación entre sensores y estaciones.
+- Registro de parámetros con sus respectivas unidades de medida.
+
+---
+
+## 🖥️ Endpoint: Visualizar Parámetros de Estaciones
+
+### URL
+`GET` [http://localhost/station1.discientic.com/index.php?endpoint=stations](http://localhost/station1.discientic.com/index.php?endpoint=stations)
+
+### Descripción
+Este endpoint permite obtener la información de las estaciones registradas, junto con sus sensores y parámetros asociados.
+
+### Ejemplo de Solicitud
+```bash
+curl -X GET "http://localhost/station1.discientic.com/index.php?endpoint=stations"
+
 
 [
     {
@@ -33,7 +51,4 @@ ejemplo de respuesta
         ]
     }
 ]
-
-
-
 
