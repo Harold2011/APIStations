@@ -51,7 +51,7 @@ curl -X GET "http://localhost/station1.discientic.com/index.php?endpoint=station
         ]
     }
 ]
-
+```
 ## 🖥️ Endpoint: Registrar Usuario
 
 ### URL
