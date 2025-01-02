@@ -27,4 +27,20 @@ class Board {
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function getBoardsByUser($user_id) {
+        $query = "SELECT * FROM board WHERE id_user = :id_user";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':id_user', $user_id);
+        $stmt->execute();
+    
+        $boards = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+        if ($boards) {
+            return ["boards" => $boards];
+        } else {
+            return ["error" => "No boards found for this user"];
+        }
+    }
+    
 }

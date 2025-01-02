@@ -60,7 +60,11 @@ class APIHandler {
                 $this->handleTableSensor();
                 break;
 
-            case "user_boards": // Nuevo endpoint
+            case "user_boards": // Nuevo endpoint para obtener los boards de un usuario
+                $this->handleGetUserBoards();  // Cambiar a handleGetUserBoards para solicitudes GET
+                break;
+
+            case "user_boards_stations": // Nuevo endpoint
                 $this->handleUserBoards();
                 break;
 
@@ -93,18 +97,47 @@ class APIHandler {
         }
     }
 
+    private function handleBoardRequest() {
+        // Obtener el método de la solicitud (POST o GET)
+        $method = $_SERVER['REQUEST_METHOD'];
+    
+        if ($method == 'POST') {
+            // Llamar al método para crear un board
+            $this->handleCreateBoard();
+        } elseif ($method == 'GET') {
+            // Llamar al método para obtener los boards de un usuario
+            $this->handleGetBoards();
+        } else {
+            // Responder con un error si el método no es POST ni GET
+            $this->respond(["error" => "Invalid request method"], 405);
+        }
+    }
+    
     private function handleCreateBoard() {
         $data = json_decode(file_get_contents("php://input"), true);
-
+    
         if (!isset($data['name'], $data['id_user'])) {
             $this->respond(["error" => "Invalid input"], 400);
             return;
         }
-
+    
         $result = $this->board->createBoard($data['name'], $data['id_user']);
         $this->respond($result);
     }
-
+    
+    private function handleGetBoards() {
+        // Obtener el id del usuario desde los parámetros de la URL
+        $id_user = isset($_GET['id_user']) ? $_GET['id_user'] : null;
+    
+        if (!$id_user) {
+            $this->respond(["error" => "User ID is required"], 400);
+            return;
+        }
+    
+        // Obtener los boards del usuario
+        $result = $this->board->getBoardsByUser($id_user);
+        $this->respond($result);
+    }
     private function handleCreateTable() {
         $data = json_decode(file_get_contents("php://input"), true);
 
@@ -194,6 +227,24 @@ class APIHandler {
         // Devolver los resultados
         $this->respond($result);
     }
+
+    private function handleGetUserBoards() {
+        // Leer los datos del cuerpo de la solicitud
+        $data = json_decode(file_get_contents("php://input"), true);
+
+        // Verificar si el user_id está presente en el cuerpo de la solicitud
+        if (!isset($data['user_id'])) {
+            $this->respond(["error" => "User ID is required"], 400);
+            return;
+        }
+
+        $user_id = intval($data['user_id']); // Obtener el user_id desde el cuerpo de la solicitud
+        $result = $this->board->getBoardsByUser($user_id); // Llamada al método que obtiene los boards
+
+        // Devolver los resultados
+        $this->respond($result);
+    }
+
 
 
     private function respond($data, $status = 200) {
