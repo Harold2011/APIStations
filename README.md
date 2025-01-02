@@ -352,5 +352,87 @@ curl -X GET "http://localhost/station1.discientic.com/index.php?endpoint=station
     }
 ]
 ```
+## Endpoint para visualizar los tableros de un usuario
+
+### GET http://localhost/station1.discientic.com/index.php?endpoint=user_boards
+
+**Body:**
+
+```json
+{
+    "user_id": 1
+}
+
+```
+### Respuesta:
+
+```json
+{
+    "data": [
+        {
+            "station_name": "Estaci\u00f3n Santa Marta",
+            "station_description": "Estaci\u00f3n Santa Marta",
+            "station_location": "Estaci\u00f3n Santa Marta",
+            "boards": {
+                "1": {
+                    "board_name": "Tablero 1",
+                    "tables": {
+                        "1": {
+                            "table_name": "Tabla 1",
+                            "sensors": [
+                                {
+                                    "sensor_id": 2,
+                                    "sensor_name": "COR2",
+                                    "sensor_unit_measurement": "Amperio"
+                                },
+                                {
+                                    "sensor_id": 2,
+                                    "sensor_name": "COR2",
+                                    "sensor_unit_measurement": "Amperio"
+                                },
+                                {
+                                    "sensor_id": 2,
+                                    "sensor_name": "COR2",
+                                    "sensor_unit_measurement": "Amperio"
+                                },
+                                {
+                                    "sensor_id": 2,
+                                    "sensor_name": "COR2",
+                                    "sensor_unit_measurement": "Amperio"
+                                },
+                                {
+                                    "sensor_id": 2,
+                                    "sensor_name": "COR2",
+                                    "sensor_unit_measurement": "Amperio"
+                                },
+                                {
+                                    "sensor_id": 2,
+                                    "sensor_name": "COR2",
+                                    "sensor_unit_measurement": "Amperio"
+                                },
+                                {
+                                    "sensor_id": 2,
+                                    "sensor_name": "COR2",
+                                    "sensor_unit_measurement": "Amperio"
+                                },
+                                {
+                                    "sensor_id": 2,
+                                    "sensor_name": "COR2",
+                                    "sensor_unit_measurement": "Amperio"
+                                },
+                                {
+                                    "sensor_id": 2,
+                                    "sensor_name": "COR2",
+                                    "sensor_unit_measurement": "Amperio"
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}
+```
 ## Relaciones en base de datos
 ![image](https://github.com/user-attachments/assets/1b028989-adb2-420d-b5b9-7bb49a65c59a)

@@ -7,6 +7,7 @@ require_once "Tables.php";
 require_once 'Board.php';
 require_once 'StationBoard.php'; // Incluir la clase StationBoard
 require_once 'TableSensor.php'; // Incluir la clase TableSensor
+require_once "GetUserBoards.php";
 
 class APIHandler {
     private $db;
@@ -57,6 +58,10 @@ class APIHandler {
 
             case "table_sensor": // Endpoint para la nueva tabla table_sensor
                 $this->handleTableSensor();
+                break;
+
+            case "user_boards": // Nuevo endpoint
+                $this->handleUserBoards();
                 break;
 
             default:
@@ -173,6 +178,24 @@ class APIHandler {
         }
     }
     
+    // Cambiar el endpoint para aceptar una solicitud POST
+    private function handleUserBoards() {
+        // Verificar si el cuerpo de la solicitud contiene el parámetro user_id
+        $data = json_decode(file_get_contents('php://input'), true);
+
+        if (!isset($data['user_id'])) {
+            $this->respond(['error' => 'El parámetro user_id es obligatorio.'], 400);
+            return;
+        }
+
+        $user_id = intval($data['user_id']); // Obtener el user_id del cuerpo JSON
+        $result = getUserBoards($this->db, $user_id); // Llamada a la función que ejecuta la consulta
+
+        // Devolver los resultados
+        $this->respond($result);
+    }
+
+
     private function respond($data, $status = 200) {
         http_response_code($status);
         header('Content-Type: application/json');
