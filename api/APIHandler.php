@@ -76,12 +76,12 @@ class APIHandler {
 
         // Verificar si la acción es la creación de una nueva asociación
         if (isset($data['action']) && $data['action'] === 'create') {
-            if (!isset($data['tableId'], $data['sensorId'])) {
+            if (!isset($data['tableId'], $data['sensorId'], $data['stationId'])) {
                 $this->respond(["error" => "Invalid input"], 400);
                 return;
             }
 
-            $result = $this->tableSensor->createTableSensor($data['tableId'], $data['sensorId']);
+            $result = $this->tableSensor->createTableSensor($data['tableId'], $data['sensorId'], $data['stationId']);
             $this->respond($result);
         }
         // Consultar los sensores asociados a una tabla
@@ -96,12 +96,12 @@ class APIHandler {
     private function handleCreateBoard() {
         $data = json_decode(file_get_contents("php://input"), true);
 
-        if (!isset($data['name'])) {
+        if (!isset($data['name'], $data['id_user'])) {
             $this->respond(["error" => "Invalid input"], 400);
             return;
         }
 
-        $result = $this->board->createBoard($data['name']);
+        $result = $this->board->createBoard($data['name'], $data['id_user']);
         $this->respond($result);
     }
 

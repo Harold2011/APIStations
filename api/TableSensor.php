@@ -8,11 +8,12 @@ class TableSensor {
     }
 
     // Método para asociar un sensor a una tabla
-    public function createTableSensor($tableId, $sensorId) {
-        $query = "INSERT INTO sensor_variable (id_table, id_sensor) VALUES (:tableId, :sensorId)";
+    public function createTableSensor($tableId, $sensorId, $stationId) {
+        $query = "INSERT INTO sensor_variable (id_table, id_sensor, id_station) VALUES (:tableId, :sensorId, :stationId)";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":tableId", $tableId);
         $stmt->bindParam(":sensorId", $sensorId);
+        $stmt->bindParam(":stationId", $stationId);
 
         if ($stmt->execute()) {
             return ["success" => "Sensor successfully associated with table", "table_sensor_id" => $this->conn->lastInsertId()];

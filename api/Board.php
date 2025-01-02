@@ -7,10 +7,11 @@ class Board {
         $this->conn = $db;
     }
 
-    public function createBoard($name) {
-        $query = "INSERT INTO board (name) VALUES (:name)";
+    public function createBoard($name, $id_user) {
+        $query = "INSERT INTO board (name, id_user) VALUES (:name, :id_user)";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":name", $name);
+        $stmt->bindParam(":id_user", $id_user);
 
         if ($stmt->execute()) {
             return ["success" => "Board created successfully", "board_id" => $this->conn->lastInsertId()];

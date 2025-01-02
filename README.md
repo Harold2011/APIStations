@@ -171,7 +171,8 @@ El body debe enviarse en formato JSON con la siguiente estructura:
 
 ```json
 {
-  "name": "Mi Nuevo Board"
+  "name": "Mi Nuevo Board",
+  "id_user": 1
 }
 ```
 

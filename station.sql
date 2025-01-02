@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 31-12-2024 a las 22:28:54
+-- Tiempo de generación: 02-01-2025 a las 22:21:45
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -29,16 +29,28 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `board` (
   `id` int(11) NOT NULL,
-  `Name` varchar(100) NOT NULL
+  `Name` varchar(100) NOT NULL,
+  `id_user` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `board`
 --
 
-INSERT INTO `board` (`id`, `Name`) VALUES
-(1, 'Tablero 1'),
-(2, 'Mi Nuevo Board');
+INSERT INTO `board` (`id`, `Name`, `id_user`) VALUES
+(6, 'Mi Nuevo Board', 4);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `formulas`
+--
+
+CREATE TABLE `formulas` (
+  `id` int(11) NOT NULL,
+  `name` varchar(300) NOT NULL,
+  `formula` varchar(300) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -53,13 +65,6 @@ CREATE TABLE `parameter` (
   `measurement` int(11) NOT NULL,
   `dataTime` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `parameter`
---
-
-INSERT INTO `parameter` (`id`, `id_station`, `id_sensor`, `measurement`, `dataTime`) VALUES
-(3, 1, 1, 20, '2024-12-16 15:22:53');
 
 -- --------------------------------------------------------
 
@@ -123,17 +128,17 @@ INSERT INTO `sensor` (`id`, `Name`, `unit_measurement`) VALUES
 CREATE TABLE `sensor_variable` (
   `id` int(11) NOT NULL,
   `id_table` int(11) NOT NULL,
-  `id_sensor` int(11) NOT NULL
+  `id_sensor` int(11) NOT NULL,
+  `id_station` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `sensor_variable`
 --
 
-INSERT INTO `sensor_variable` (`id`, `id_table`, `id_sensor`) VALUES
-(1, 1, 2),
-(2, 1, 2),
-(3, 1, 2);
+INSERT INTO `sensor_variable` (`id`, `id_table`, `id_sensor`, `id_station`) VALUES
+(4, 3, 1, 2),
+(5, 3, 1, 2);
 
 -- --------------------------------------------------------
 
@@ -154,7 +159,7 @@ CREATE TABLE `station` (
 --
 
 INSERT INTO `station` (`id`, `Name`, `Description`, `location`, `id_user`) VALUES
-(1, 'Estación Santa Marta', 'Estación Santa Marta', 'Estación Santa Marta', 1);
+(2, 'Santa marta', 'Santa marta', 'Santa marta', 4);
 
 -- --------------------------------------------------------
 
@@ -173,9 +178,7 @@ CREATE TABLE `station_board` (
 --
 
 INSERT INTO `station_board` (`id`, `id_board`, `id_station`) VALUES
-(2, 1, 1),
-(4, 1, 1),
-(5, 1, 1);
+(6, 6, 2);
 
 -- --------------------------------------------------------
 
@@ -194,8 +197,7 @@ CREATE TABLE `tables` (
 --
 
 INSERT INTO `tables` (`id`, `name`, `id_board`) VALUES
-(1, 'Tabla 1', 1),
-(2, 'Mi Tabla', 1);
+(3, 'tabla', 6);
 
 -- --------------------------------------------------------
 
@@ -216,9 +218,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `Name`, `Email`, `Password`, `id_role`) VALUES
-(1, 'Admin', 'Admin@test.com', '12345678', 1),
-(2, 'John Doe', 'john.doe@example.com', '$2y$10$r0wdKQ7Zxkj6NDKD52ZeI.OeK6NMJ8fQPtRMROwWC2AzJwZh9u9l6', 1),
-(3, 'ejemplo', 'ejemplo@example.com', '$2y$10$7QUjMJgqfH9bRW01Qh0Eo.12hIsYCmiX18IjNgeVdfYj9azlUVr2m', 2);
+(4, 'ejemplo', 'ejemplo@example.com', '$2y$10$a.KRoDWfTDndRd5iofKjvusa4dk/ZijezbKBqF7ZM56fvFJyCc9Vi', 2);
 
 --
 -- Índices para tablas volcadas
@@ -228,6 +228,13 @@ INSERT INTO `users` (`id`, `Name`, `Email`, `Password`, `id_role`) VALUES
 -- Indices de la tabla `board`
 --
 ALTER TABLE `board`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_user` (`id_user`);
+
+--
+-- Indices de la tabla `formulas`
+--
+ALTER TABLE `formulas`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -256,7 +263,8 @@ ALTER TABLE `sensor`
 ALTER TABLE `sensor_variable`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id_table` (`id_table`),
-  ADD KEY `id_sensor` (`id_sensor`);
+  ADD KEY `id_sensor` (`id_sensor`),
+  ADD KEY `id_station` (`id_station`);
 
 --
 -- Indices de la tabla `station`
@@ -295,7 +303,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de la tabla `board`
 --
 ALTER TABLE `board`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT de la tabla `formulas`
+--
+ALTER TABLE `formulas`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `parameter`
@@ -319,35 +333,41 @@ ALTER TABLE `sensor`
 -- AUTO_INCREMENT de la tabla `sensor_variable`
 --
 ALTER TABLE `sensor_variable`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `station`
 --
 ALTER TABLE `station`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `station_board`
 --
 ALTER TABLE `station_board`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `tables`
 --
 ALTER TABLE `tables`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Restricciones para tablas volcadas
 --
+
+--
+-- Filtros para la tabla `board`
+--
+ALTER TABLE `board`
+  ADD CONSTRAINT `board_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `parameter`
@@ -360,8 +380,9 @@ ALTER TABLE `parameter`
 -- Filtros para la tabla `sensor_variable`
 --
 ALTER TABLE `sensor_variable`
-  ADD CONSTRAINT `Sensor_variable_ibfk_1` FOREIGN KEY (`id_table`) REFERENCES `tables` (`id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `Sensor_variable_ibfk_2` FOREIGN KEY (`id_sensor`) REFERENCES `sensor` (`id`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `sensor_variable_ibfk_1` FOREIGN KEY (`id_station`) REFERENCES `station` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE,
+  ADD CONSTRAINT `sensor_variable_ibfk_2` FOREIGN KEY (`id_table`) REFERENCES `tables` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE,
+  ADD CONSTRAINT `sensor_variable_ibfk_3` FOREIGN KEY (`id_sensor`) REFERENCES `sensor` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `station`
