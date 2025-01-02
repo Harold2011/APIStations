@@ -308,9 +308,10 @@ curl -X GET "http://localhost/station1.discientic.com/index.php?endpoint=station
 **Cuerpo de la solicitud (JSON)**:
 ```json
 {
-  "action": "create",
-  "tableId": 1,
-  "sensorId": 2
+   "action": "create",
+    "tableId": 3,
+    "sensorId": 2,
+    "stationId": 2
 }
 ```
 
