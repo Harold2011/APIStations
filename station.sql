@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 02-01-2025 a las 22:21:45
+-- Tiempo de generación: 03-01-2025 a las 14:41:37
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -51,6 +51,14 @@ CREATE TABLE `formulas` (
   `name` varchar(300) NOT NULL,
   `formula` varchar(300) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `formulas`
+--
+
+INSERT INTO `formulas` (`id`, `name`, `formula`) VALUES
+(1, 'Formula de ejemplo', 'x + y / 2'),
+(2, 'Formula de ejemplo', 'x + y / 2');
 
 -- --------------------------------------------------------
 
@@ -138,7 +146,8 @@ CREATE TABLE `sensor_variable` (
 
 INSERT INTO `sensor_variable` (`id`, `id_table`, `id_sensor`, `id_station`) VALUES
 (4, 3, 1, 2),
-(5, 3, 1, 2);
+(5, 3, 1, 2),
+(7, 3, 2, 2);
 
 -- --------------------------------------------------------
 
@@ -309,7 +318,7 @@ ALTER TABLE `board`
 -- AUTO_INCREMENT de la tabla `formulas`
 --
 ALTER TABLE `formulas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `parameter`
@@ -333,7 +342,7 @@ ALTER TABLE `sensor`
 -- AUTO_INCREMENT de la tabla `sensor_variable`
 --
 ALTER TABLE `sensor_variable`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `station`
