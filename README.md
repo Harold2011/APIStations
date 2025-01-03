@@ -436,5 +436,46 @@ curl -X GET "http://localhost/station1.discientic.com/index.php?endpoint=station
     ]
 }
 ```
+
+## Endpoint para crear formulas
+
+### POST http://localhost/station1.discientic.com/index.php?endpoint=formula
+
+**Body:**
+
+```json
+
+{
+    "name": "Formula de ejemplo",
+    "formula": "x + y / 2"
+}
+
+```
+### Respuesta:
+
+```json
+{
+    "success": true,
+    "message": "Formula created successfully."
+}
+```
+
+## Endpoint para consultar formulas
+
+
+### GET http://localhost/station1.discientic.com/index.php?endpoint=formulas
+
+### este endpoint no tiene Body
+
+### Respuesta:
+
+```json
+[
+    {
+        "name": "Formula de ejemplo",
+        "formula": "x + y \/ 2"
+    }
+]
+```
 ## Relaciones en base de datos
 ![image](https://github.com/user-attachments/assets/1b028989-adb2-420d-b5b9-7bb49a65c59a)

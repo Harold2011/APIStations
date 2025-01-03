@@ -8,6 +8,8 @@ require_once 'Board.php';
 require_once 'StationBoard.php'; // Incluir la clase StationBoard
 require_once 'TableSensor.php'; // Incluir la clase TableSensor
 require_once "GetUserBoards.php";
+require_once "Formula.php";
+
 
 class APIHandler {
     private $db;
@@ -17,6 +19,7 @@ class APIHandler {
     private $table;
     private $stationBoard;
     private $tableSensor; // Nueva propiedad
+    private $formulas;
 
     public function __construct() {
         // Conectar con la base de datos
@@ -28,6 +31,7 @@ class APIHandler {
         $this->table = new Tables($this->db);
         $this->stationBoard = new StationBoard($this->db); // Instanciar la clase StationBoard
         $this->tableSensor = new TableSensor($this->db); // Instanciar la clase TableSensor
+        $this->formulas = new Formulas($this->db);
     }
 
     public function handleRequest($endpoint) {
@@ -66,6 +70,16 @@ class APIHandler {
 
             case "user_boards_stations": // Nuevo endpoint
                 $this->handleUserBoards();
+                break;
+
+            case "formulas":
+                if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+                    $this->handleGetFormulas();
+                } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                    $this->handleCreateFormula();
+                } else {
+                    $this->respond(["error" => "Method not allowed"], 405);
+                }
                 break;
 
             default:
@@ -245,7 +259,32 @@ class APIHandler {
         $this->respond($result);
     }
 
-
+    private function handleCreateFormula() {
+        // Obtener los datos enviados en el cuerpo de la solicitud
+        $data = json_decode(file_get_contents("php://input"), true);
+    
+        if (!isset($data['name']) || !isset($data['formula'])) {
+            $this->respond(["error" => "Missing required fields"], 400);
+            return;
+        }
+    
+        $name = $data['name'];
+        $formula = $data['formula'];
+    
+        $result = $this->formulas->createFormula($name, $formula);
+    
+        if (isset($result['error'])) {
+            $this->respond($result, 500); // Error al crear la fórmula
+        } else {
+            $this->respond($result, 201); // Fórmula creada con éxito
+        }
+    }
+    
+     // Método para manejar solicitudes GET
+     private function handleGetFormulas() {
+        $result = $this->formulas->getFormulas(); // Llama al método en la clase Formula
+        $this->respond($result); // Responde con los datos obtenidos
+    }
 
     private function respond($data, $status = 200) {
         http_response_code($status);
