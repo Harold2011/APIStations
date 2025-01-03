@@ -86,12 +86,21 @@ class APIHandler {
                 $this->handleGetTablesByBoard();
                 break;
 
+            case "get_tables_with_relations":
+                $this->handleGetTablesWithRelations();
+                break;
+                
             default:
                 $this->respond(["error" => "Invalid endpoint"], 400);
                 break;
         }
     }
-
+    
+    private function handleGetTablesWithRelations() {
+        $result = $this->table->getTablesWithRelations();
+        $this->respond($result);
+    }
+    
     private function handleTableSensor() {
         // Obtener la acción deseada, ya sea crear una asociación o consultar
         $data = json_decode(file_get_contents("php://input"), true);
@@ -159,12 +168,12 @@ class APIHandler {
     private function handleCreateTable() {
         $data = json_decode(file_get_contents("php://input"), true);
 
-        if (!isset($data['name'], $data['id_board'])) {
+        if (!isset($data['name'], $data['id_board'], $data['id_station'])) {
             $this->respond(["error" => "Invalid input"], 400);
             return;
         }
 
-        $result = $this->table->createTable($data['name'], $data['id_board']);
+        $result = $this->table->createTable($data['name'], $data['id_board'], $data['id_station']);
         $this->respond($result);
     }
 
