@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 03-01-2025 a las 14:41:37
+-- Tiempo de generación: 03-01-2025 a las 21:58:19
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -38,7 +38,7 @@ CREATE TABLE `board` (
 --
 
 INSERT INTO `board` (`id`, `Name`, `id_user`) VALUES
-(6, 'Mi Nuevo Board', 4);
+(7, 'tablero', 4);
 
 -- --------------------------------------------------------
 
@@ -140,15 +140,6 @@ CREATE TABLE `sensor_variable` (
   `id_station` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Volcado de datos para la tabla `sensor_variable`
---
-
-INSERT INTO `sensor_variable` (`id`, `id_table`, `id_sensor`, `id_station`) VALUES
-(4, 3, 1, 2),
-(5, 3, 1, 2),
-(7, 3, 2, 2);
-
 -- --------------------------------------------------------
 
 --
@@ -182,13 +173,6 @@ CREATE TABLE `station_board` (
   `id_station` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Volcado de datos para la tabla `station_board`
---
-
-INSERT INTO `station_board` (`id`, `id_board`, `id_station`) VALUES
-(6, 6, 2);
-
 -- --------------------------------------------------------
 
 --
@@ -198,15 +182,17 @@ INSERT INTO `station_board` (`id`, `id_board`, `id_station`) VALUES
 CREATE TABLE `tables` (
   `id` int(11) NOT NULL,
   `name` varchar(200) NOT NULL,
-  `id_board` int(11) NOT NULL
+  `id_board` int(11) NOT NULL,
+  `id_station` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `tables`
 --
 
-INSERT INTO `tables` (`id`, `name`, `id_board`) VALUES
-(3, 'tabla', 6);
+INSERT INTO `tables` (`id`, `name`, `id_board`, `id_station`) VALUES
+(4, 'Mi Tabla', 7, 2),
+(5, 'Mi Tabla2', 7, 2);
 
 -- --------------------------------------------------------
 
@@ -295,7 +281,8 @@ ALTER TABLE `station_board`
 --
 ALTER TABLE `tables`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `id_board` (`id_board`);
+  ADD KEY `id_board` (`id_board`),
+  ADD KEY `id_station` (`id_station`);
 
 --
 -- Indices de la tabla `users`
@@ -312,7 +299,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de la tabla `board`
 --
 ALTER TABLE `board`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `formulas`
@@ -360,7 +347,7 @@ ALTER TABLE `station_board`
 -- AUTO_INCREMENT de la tabla `tables`
 --
 ALTER TABLE `tables`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `users`
@@ -410,7 +397,8 @@ ALTER TABLE `station_board`
 -- Filtros para la tabla `tables`
 --
 ALTER TABLE `tables`
-  ADD CONSTRAINT `Table_ibfk_1` FOREIGN KEY (`id_board`) REFERENCES `board` (`id`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `Table_ibfk_1` FOREIGN KEY (`id_board`) REFERENCES `board` (`id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `tables_ibfk_1` FOREIGN KEY (`id_station`) REFERENCES `station` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `users`
