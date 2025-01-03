@@ -82,6 +82,10 @@ class APIHandler {
                 }
                 break;
 
+            case "tables_by_board": // Nuevo endpoint para obtener tablas de un tablero
+                $this->handleGetTablesByBoard();
+                break;
+
             default:
                 $this->respond(["error" => "Invalid endpoint"], 400);
                 break;
@@ -286,6 +290,24 @@ class APIHandler {
         $this->respond($result); // Responde con los datos obtenidos
     }
 
+    private function handleGetTablesByBoard() {
+        // Obtener el boardId desde los parámetros de la URL o del cuerpo de la solicitud
+        $data = json_decode(file_get_contents("php://input"), true);
+    
+        if (!isset($data['boardId'])) {
+            $this->respond(["error" => "Board ID is required"], 400);
+            return;
+        }
+    
+        $boardId = intval($data['boardId']); // Obtener el boardId
+    
+        // Obtener las tablas asociadas al tablero
+        $result = $this->table->getTablesByBoard($boardId);
+    
+        // Responder con las tablas obtenidas
+        $this->respond($result);
+    }
+    
     private function respond($data, $status = 200) {
         http_response_code($status);
         header('Content-Type: application/json');

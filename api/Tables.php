@@ -25,7 +25,8 @@ class Tables {
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":boardId", $boardId);
         $stmt->execute();
-
+    
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    
 }
